@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAASCOM Caller Plan</title>
+<meta name="description" content="Project plan for an Android caller-ID app linked to the SAASCOM CRM (soft_client_suivi).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --surface-2: #eef0f4;
+    --text: #151a22;
+    --muted: #5a6474;
+    --border: #e1e5eb;
+    --accent: #2c56e0;
+    --accent-soft: #e7edfd;
+    --ok: #0b8a5f;
+    --ok-soft: #e2f5ed;
+    --warn: #a86a12;
+    --warn-soft: #fbf0dc;
+    --bad: #c63b3b;
+    --bad-soft: #fbe6e6;
+    --code-bg: #f0f2f6;
+    --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 4px 16px rgba(16, 24, 40, .04);
+    --radius: 14px;
+    --sans: "IBM Plex Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --arabic: "IBM Plex Sans Arabic", "IBM Plex Sans", Tahoma, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1015;
+      --surface: #151920;
+      --surface-2: #1c212a;
+      --text: #e6e9ef;
+      --muted: #98a2b3;
+      --border: #282e39;
+      --accent: #84a2ff;
+      --accent-soft: #1b2546;
+      --ok: #3fcf98;
+      --ok-soft: #12291f;
+      --warn: #f0b75a;
+      --warn-soft: #2d2312;
+      --bad: #f07a7a;
+      --bad-soft: #2f1717;
+      --code-bg: #1a1f27;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1015;
+    --surface: #151920;
+    --surface-2: #1c212a;
+    --text: #e6e9ef;
+    --muted: #98a2b3;
+    --border: #282e39;
+    --accent: #84a2ff;
+    --accent-soft: #1b2546;
+    --ok: #3fcf98;
+    --ok-soft: #12291f;
+    --warn: #f0b75a;
+    --warn-soft: #2d2312;
+    --bad: #f07a7a;
+    --bad-soft: #2f1717;
+    --code-bg: #1a1f27;
+    --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  a { color: var(--accent); }
+  code, pre { font-family: var(--mono); font-size: .86em; }
+  code { background: var(--code-bg); padding: .1em .35em; border-radius: 5px; }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; overflow-x: auto; line-height: 1.5; margin: 12px 0 0;
+  }
+  pre code { background: none; padding: 0; font-size: 1em; }
+  h1, h2, h3 { line-height: 1.25; margin: 0; }
+  h2 { font-size: 1.5rem; letter-spacing: -.01em; }
+  h3 { font-size: 1.05rem; }
+  p { margin: .6em 0; }
+  .muted { color: var(--muted); }
+
+  /* ---------- header ---------- */
+  header.hero { padding: 48px 0 28px; }
+  .eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .hero h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); letter-spacing: -.02em; margin: 8px 0 12px; }
+  .hero .lead { font-size: 1.12rem; color: var(--muted); max-width: 720px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 500;
+    padding: 4px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border);
+  }
+  .chip.accent { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+
+  nav.toc {
+    position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+  }
+  nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; padding-top: 8px; padding-bottom: 8px; scrollbar-width: none; }
+  nav.toc a {
+    white-space: nowrap; text-decoration: none; color: var(--muted); font-size: .86rem; font-weight: 500;
+    padding: 5px 10px; border-radius: 8px;
+  }
+  nav.toc a:hover { background: var(--surface-2); color: var(--text); }
+
+  section { padding: 40px 0 8px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .sec-num { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; box-shadow: var(--shadow);
+  }
+  .grid { display: grid; gap: 14px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+  /* ---------- flow ---------- */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; counter-reset: step; }
+  .step {
+    position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 14px 14px; box-shadow: var(--shadow);
+  }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: .85rem; margin-bottom: 10px;
+  }
+  .step:not(:last-child)::after {
+    content: ""; position: absolute; right: -9px; top: 28px; width: 8px; height: 8px;
+    border-top: 2px solid var(--muted); border-right: 2px solid var(--muted); transform: rotate(45deg);
+  }
+  .step h3 { font-size: .98rem; margin-bottom: 4px; }
+  .step p { font-size: .88rem; color: var(--muted); margin: 0; }
+  @media (max-width: 820px) {
+    .flow { grid-template-columns: 1fr; }
+    .step:not(:last-child)::after { right: auto; left: 24px; top: auto; bottom: -9px; transform: rotate(135deg); }
+  }
+
+  /* ---------- phones ---------- */
+  .phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 8px; }
+  .phone-col { width: 264px; max-width: 100%; }
+  .phone {
+    width: 100%; height: 540px; border-radius: 40px; padding: 10px; background: #05070b;
+    box-shadow: 0 12px 40px rgba(0,0,0,.18), inset 0 0 0 2px #2a2f38;
+  }
+  .screen {
+    position: relative; height: 100%; border-radius: 31px; overflow: hidden; color: #fff;
+    background: radial-gradient(120% 70% at 50% 0%, #2b3550 0%, #121722 55%, #0a0d13 100%);
+    font-family: var(--arabic);
+  }
+  .screen.light { background: #f3f4f7; color: #151a22; }
+  .notch { width: 92px; height: 22px; background: #05070b; border-radius: 0 0 14px 14px; margin: 0 auto; }
+  .incoming { text-align: center; padding-top: 30px; }
+  .incoming .label { font-size: .78rem; opacity: .7; }
+  .incoming .num { font-family: var(--sans); font-size: 1.45rem; font-weight: 500; margin-top: 4px; direction: ltr; }
+  .call-btns { position: absolute; bottom: 26px; left: 0; right: 0; display: flex; justify-content: space-around; }
+  .cbtn { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; }
+  .cbtn.no { background: #e5484d; }
+  .cbtn.yes { background: #30a46c; }
+  .cbtn svg { width: 24px; height: 24px; fill: #fff; }
+
+  .overlay {
+    position: absolute; left: 10px; right: 10px; top: 128px; direction: rtl; text-align: right;
+    background: #fff; color: #151a22; border-radius: 18px; padding: 13px 14px 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: .8rem; line-height: 1.5;
+  }
+  .ov-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .brand { display: flex; align-items: center; gap: 6px; font-family: var(--sans); font-weight: 600; font-size: .7rem; letter-spacing: .04em; color: #2c56e0; }
+  .brand i { width: 16px; height: 16px; border-radius: 5px; background: #2c56e0; display: inline-block; }
+  .stage { font-size: .72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; }
+  .stage.interested { background: #fbf0dc; color: #8a5508; }
+  .stage.unknown { background: #eef0f4; color: #5a6474; }
+  .ov-name { font-size: 1.05rem; font-weight: 700; }
+  .ov-sub { color: #5a6474; font-size: .78rem; margin-bottom: 8px; }
+  .ov-row { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; border-top: 1px solid #eef0f4; }
+  .ov-row span:first-child { color: #5a6474; }
+  .ov-row b { font-weight: 600; }
+  .ov-quote { background: #f3f4f7; border-radius: 8px; padding: 6px 8px; margin: 2px 0 6px; color: #3a4252; font-size: .76rem; }
+  .ov-alert { margin-top: 6px; background: #fbe6e6; color: #a32d2d; border-radius: 8px; padding: 5px 8px; font-weight: 600; font-size: .75rem; }
+  bdi.ltr { direction: ltr; unicode-bidi: isolate; font-family: var(--sans); }
+
+  .after { direction: rtl; text-align: right; padding: 18px 16px; font-size: .82rem; }
+  .after .small { color: #5a6474; font-size: .74rem; }
+  .after h4 { margin: 4px 0 12px; font-size: 1.02rem; }
+  .seg { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
+  .seg span { text-align: center; border: 1px solid #dfe3ea; border-radius: 9px; padding: 6px 0; background: #fff; font-weight: 500; }
+  .seg span.on { background: #e2f5ed; border-color: #0b8a5f; color: #0b6e4c; }
+  .field { background: #fff; border: 1px solid #dfe3ea; border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
+  .field .small { display: block; margin-bottom: 2px; }
+  .field.tall { min-height: 74px; }
+  .btn-p { display: block; text-align: center; background: #2c56e0; color: #fff; border-radius: 11px; padding: 10px; font-weight: 600; margin-top: 12px; }
+  .btn-s { display: block; text-align: center; border: 1px solid #c9d3f6; color: #2c56e0; border-radius: 11px; padding: 9px; font-weight: 600; margin-top: 8px; background: #fff; }
+  .phone-cap { text-align: center; margin-top: 12px; font-size: .9rem; }
+  .phone-cap b { display: block; }
+  .phone-cap span { color: var(--muted); font-size: .84rem; }
+
+  /* ---------- verdict ---------- */
+  .verdict { border-left: 4px solid var(--ok); background: var(--ok-soft); border-radius: 12px; padding: 16px 18px; }
+  .verdict b.big { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+
+  /* ---------- tables ---------- */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+  table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: .92rem; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; background: var(--surface-2); }
+  tr:last-child td { border-bottom: none; }
+  td:last-child { min-width: 260px; }
+  td.rec, th.rec { background: var(--accent-soft); }
+  .y { color: var(--ok); font-weight: 600; }
+  .n { color: var(--bad); font-weight: 600; }
+  .m { color: var(--warn); font-weight: 600; }
+  .method { font-family: var(--mono); font-size: .76rem; font-weight: 600; padding: 2px 7px; border-radius: 6px; }
+  .GET { background: var(--ok-soft); color: var(--ok); }
+  .POST { background: var(--accent-soft); color: var(--accent); }
+
+  ul.clean { list-style: none; padding: 0; margin: 0; }
+  ul.clean li { padding: 9px 0; border-bottom: 1px solid var(--border); }
+  ul.clean li:last-child { border-bottom: none; }
+  ol.steps { margin: 0; padding-left: 20px; }
+  ol.steps li { margin: 8px 0; }
+
+  .note { border-radius: 12px; padding: 14px 16px; font-size: .93rem; background: var(--surface-2); border: 1px solid var(--border); }
+  .note b { color: var(--text); }
+
+  /* ---------- layers ---------- */
+  .layers { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; }
+  .layer { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+  .layer .tag { font-size: .74rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+  .layer h3 { margin: 4px 0 6px; }
+  .layer p { font-size: .9rem; color: var(--muted); margin: 0; }
+  .layer .speed { margin-top: 10px; font-family: var(--mono); font-size: .8rem; color: var(--ok); }
+  .arrow { display: grid; place-items: center; color: var(--muted); font-size: 1.4rem; }
+  @media (max-width: 720px) { .layers { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); } }
+
+  /* ---------- fields ---------- */
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .fld { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; }
+  .fld b { display: block; font-size: .93rem; }
+  .fld code { font-size: .76rem; }
+
+  /* ---------- permissions ---------- */
+  .perm { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .perm:last-child { border-bottom: none; }
+  .perm .ic { width: 34px; height: 34px; border-radius: 9px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+  .perm .ic svg { width: 18px; height: 18px; }
+  .perm b { display: block; }
+  .perm span { color: var(--muted); font-size: .9rem; }
+
+  /* ---------- ring sequence ---------- */
+  .seq { counter-reset: s; display: grid; gap: 8px; }
+  .seq div { counter-increment: s; display: grid; grid-template-columns: 70px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  .seq div::before { content: "t+" attr(data-t); font-family: var(--mono); font-size: .8rem; color: var(--accent); }
+  .seq code { font-size: .8rem; }
+
+  /* ---------- phases ---------- */
+  .phases { position: relative; padding-left: 22px; }
+  .phases::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .phase { position: relative; margin-bottom: 14px; }
+  .phase::before { content: ""; position: absolute; left: -21px; top: 22px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--bg); }
+  .phase.opt::before { background: var(--muted); }
+  .phase .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin-bottom: 6px; }
+  .phase .dur { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+  .phase ul { margin: 6px 0 0; padding-left: 18px; }
+  .phase li { margin: 3px 0; font-size: .93rem; }
+  .done { margin-top: 10px; font-size: .88rem; background: var(--ok-soft); color: var(--text); border-radius: 8px; padding: 7px 10px; }
+
+  details { margin-top: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 16px; }
+  details > summary { cursor: pointer; padding: 13px 0; font-weight: 600; font-size: .95rem; }
+  details[open] { padding-bottom: 16px; }
+
+  .q { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .q:last-child { border-bottom: none; }
+  .q .qn { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--accent); color: var(--accent); display: grid; place-items: center; font-size: .8rem; font-weight: 600; }
+  .q span { color: var(--muted); font-size: .9rem; }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: .86rem; }
+  footer ul { padding-left: 18px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Project plan · Android app</div>
+    <h1>SAASCOM Caller: know who is calling before you answer</h1>
+    <p class="lead">When a client calls someone in the sales or SAV team, their Android phone shows the client's file from the CRM (name, status, last call, payments, open requests) on top of the call screen. After the call, one tap saves a note back into the CRM.</p>
+    <div class="chips">
+      <span class="chip accent">Android only</span>
+      <span class="chip accent">Kotlin + Jetpack Compose</span>
+      <span class="chip">Linked to soft_client_suivi (Laravel CRM)</span>
+      <span class="chip">Arabic UI (RTL)</span>
+      <span class="chip">Plan date: 9 Nov 2026</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#how">How it works</a>
+    <a href="#screens">Screens</a>
+    <a href="#tech">Which technology?</a>
+    <a href="#crm">CRM changes</a>
+    <a href="#card">Card content</a>
+    <a href="#speed">Speed &amp; privacy</a>
+    <a href="#ring">While it rings</a>
+    <a href="#perms">Permissions</a>
+    <a href="#security">Security</a>
+    <a href="#phases">Build plan</a>
+    <a href="#stack">Tech &amp; folders</a>
+    <a href="#risks">Risks</a>
+    <a href="#questions">Your decisions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- 1 -->
+  <section id="how">
+    <div class="sec-head"><span class="sec-num">01</span><h2>How it works in 5 steps</h2></div>
+    <div class="flow">
+      <div class="step"><h3>Phone rings</h3><p>A client calls an agent's phone, e.g. <bdi>0550 12 34 56</bdi>.</p></div>
+      <div class="step"><h3>App gets the number</h3><p>Android gives the number to our app because it is set as the phone's "Caller ID" app.</p></div>
+      <div class="step"><h3>Instant match</h3><p>The app checks the client list saved on the phone (about 2,600 numbers). This takes milliseconds and works offline.</p></div>
+      <div class="step"><h3>Ask the CRM</h3><p>It calls the CRM API to get the full, up-to-date file: status, last call, payments, requests.</p></div>
+      <div class="step"><h3>Show the card</h3><p>A card appears over the call screen. When the call ends: "Log this call?" and the note goes to the CRM.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="screens">
+    <div class="sec-head"><span class="sec-num">02</span><h2>What the team will see</h2></div>
+    <p class="muted">Mockups (example data). The app text is in Arabic, like the CRM.</p>
+
+    <div class="phones">
+      <!-- known client -->
+      <div class="phone-col">
+        <div class="phone"><div class="screen">
+          <div class="notch"></div>
+          <div class="incoming"><div class="label">مكالمة واردة</div><div class="num">0550 12 34 56</div></div>
+          <div class="overlay">
+            <div class="ov-top"><span class="brand"><i></i>SAASCOM</span><span class="stage interested">مهتم</span></div>
+            <div class="ov-name">محمد بن علي</div>
+            <div class="ov-sub">صيدلية النور · وهران</div>
+            <div class="ov-row"><span>المسؤول</span><b>كريم</b></div>
+            <div class="ov-row"><span>آخر مكالمة</span><b>منذ 3 أيام · متوفر</b></div>
+            <div class="ov-quote">«طلب عرض سعر لنسخة متعددة الأسعار»</div>
+            <div class="ov-row"><span>الاشتراك</span><b>الباقي <bdi class="ltr">10 000 DA</bdi></b></div>
+            <div class="ov-alert">طلب عميل مفتوح · عاجل</div>
+          </div>
+          <div class="call-btns">
+            <span class="cbtn no"><svg viewBox="0 0 24 24"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08a.996.996 0 0 1 0-1.41C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28a11.27 11.27 0 0 0-2.67-1.85.996.996 0 0 1-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></svg></span>
+            <span class="cbtn yes"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+          </div>
+        </div></div>
+        <div class="phone-cap"><b>A known client calls</b><span>Card over the call screen in under 1 second</span></div>
+      </div>
+
+      <!-- unknown -->
+      <div class="phone-col">
+        <div class="phone"><div class="screen">
+          <div class="notch"></div>
+          <div class="incoming"><div class="label">مكالمة واردة</div><div class="num">0661 98 76 54</div></div>
+          <div class="overlay">
+            <div class="ov-top"><span class="brand"><i></i>SAASCOM</span><span class="stage unknown">غير مسجّل</span></div>
+            <div class="ov-name">رقم غير موجود في CRM</div>
+            <div class="ov-sub">قد يكون عميلاً جديداً</div>
+            <div class="ov-quote">بعد المكالمة يمكنك إضافته كعميل جديد بنقرة واحدة.</div>
+          </div>
+          <div class="call-btns">
+            <span class="cbtn no"><svg viewBox="0 0 24 24"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08a.996.996 0 0 1 0-1.41C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28a11.27 11.27 0 0 0-2.67-1.85.996.996 0 0 1-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></svg></span>
+            <span class="cbtn yes"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+          </div>
+        </div></div>
+        <div class="phone-cap"><b>An unknown number calls</b><span>Offer to create a new lead after the call</span></div>
+      </div>
+
+      <!-- after call -->
+      <div class="phone-col">
+        <div class="phone"><div class="screen light">
+          <div class="notch"></div>
+          <div class="after">
+            <div class="small">انتهت المكالمة · <bdi class="ltr">4:12</bdi></div>
+            <h4>سجّل المكالمة مع محمد بن علي</h4>
+            <div class="seg"><span class="on">متوفر</span><span>لا يجيب</span><span>مشغول</span><span>مغلق</span></div>
+            <div class="field tall"><span class="small">ملاحظة</span>سيرسل الوثائق يوم الأحد</div>
+            <div class="field"><span class="small">الحالة</span>مهتم ▾</div>
+            <div class="field"><span class="small">التذكير</span>الأحد <bdi class="ltr">09:00</bdi></div>
+            <span class="btn-p">حفظ في CRM</span>
+            <span class="btn-s">+ طلب عميل</span>
+          </div>
+        </div></div>
+        <div class="phone-cap"><b>After the call</b><span>Same "log call" form as the CRM, saved as a CallLog</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="tech">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Which technology: React Native or Kotlin?</h2></div>
+    <div class="verdict">
+      <b class="big">Android only → build it in Kotlin with Jetpack Compose.</b>
+      React Native's big advantage is one codebase for Android <i>and</i> iPhone. Without iPhone, that advantage disappears. The most important part (the code that runs while the phone rings) has to be written in Kotlin in any case. Doing the whole app in Kotlin means one language, one project and no bridge between JavaScript and native code.
+    </div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Why Kotlin wins here</h3>
+        <ul>
+          <li>The ringing card, the screens and the API client share the same code and data models.</li>
+          <li>Direct access to Android call features (call screening, overlay, phone state) without a plugin layer.</li>
+          <li>Small, fast app that opens instantly, even when the phone was idle.</li>
+          <li>APK built on your PC with Gradle. No cloud build service needed.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>React Native would still work, but…</h3>
+        <ul>
+          <li>Two languages: TypeScript for the screens + Kotlin for the ringing part.</li>
+          <li>The client card is built twice: native for the ring, React for the details screen.</li>
+          <li>Extra setup (Expo config plugin) to declare the call-screening service.</li>
+          <li>Its one plus here: quick UI fixes over the air (EAS Update) without reinstalling.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th></th><th class="rec">Kotlin + Compose (pick)</th><th>React Native + Expo</th></tr></thead>
+        <tbody>
+          <tr><td>Languages</td><td class="rec">Kotlin only</td><td>TypeScript + Kotlin</td></tr>
+          <tr><td>Card shown while ringing</td><td class="rec">Same code as the app</td><td>Separate native code</td></tr>
+          <tr><td>Android call APIs</td><td class="rec"><span class="y">Direct</span></td><td><span class="m">Through a native module</span></td></tr>
+          <tr><td>Build the APK</td><td class="rec">Gradle on your PC</td><td>EAS cloud or local</td></tr>
+          <tr><td>Ship a fix without reinstall</td><td class="rec"><span class="m">No</span> (in-app "new version" prompt)</td><td><span class="y">Yes</span> (EAS Update)</td></tr>
+          <tr><td>iPhone later</td><td class="rec"><span class="n">Rewrite needed</span></td><td><span class="y">Mostly reusable</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:.9rem">If iPhone ever comes back into scope, the backend API (section 04) stays the same for any app.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="crm">
+    <div class="sec-head"><span class="sec-num">04</span><h2>What we add to the CRM (soft_client_suivi)</h2></div>
+    <p>Good news: the CRM already has most of the logic. <code>Phone::normalize()</code> and <code>Phone::variants()</code> handle Algerian formats (<bdi>0550…</bdi>, <bdi>+213550…</bdi>, <bdi>213550…</bdi>). <code>CallLog</code> already updates <code>last_contacted_at</code> and auto-assigns the lead. <code>Subscription</code>, <code>Payment</code> and <code>UserNote</code> hold the money and SAV data. We only add a small, secure API.</p>
+
+    <ol class="steps">
+      <li><b>Install Laravel Sanctum</b> for app login tokens: <code>php artisan install:api</code>. The CRM has no API login today.</li>
+      <li><b>Add 8 mobile endpoints</b> under <code>/api/mobile</code>, protected by <code>auth:sanctum</code> and rate limiting (table below).</li>
+      <li><b>Search both phone columns.</b> <code>Lead::findByPhone()</code> only checks <code>whatsapp_phone</code> today. Caller ID must also check <code>secondary_phone</code>: add an index on it and a <code>Lead::findByAnyPhone()</code> method. Also run a one-time command to normalize old <code>secondary_phone</code> values.</li>
+      <li><b>One shared "log call" class.</b> The «تسجيل مكالمة» form lives in <code>LeadActions::callHistory()</code>, but its save logic is inside the Filament action. Move it into <code>App\Support\CallLogger</code> so the CRM and the app use the same rules.</li>
+      <li><b>Disabled users are locked out.</b> When <code>is_active</code> becomes false, delete that user's tokens so the app stops working.</li>
+      <li><b>Admin page «الأجهزة المرتبطة»</b> in Filament: see each agent's connected phone and disconnect it.</li>
+    </ol>
+
+    <div class="table-wrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th>Method</th><th>URL</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/login</code></td><td>Email + password, returns a token. Active users only.</td></tr>
+          <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/logout</code></td><td>Deletes this phone's token.</td></tr>
+          <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/directory</code></td><td>Light list of all numbers: phone, name, company, stage (about 150 KB). Used for the instant match.</td></tr>
+          <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/lookup?phone=…</code></td><td>The full card for one number.</td></tr>
+          <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/leads/{id}/calls</code></td><td>Log the call: result, note, optional new status and reminder.</td></tr>
+          <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/leads</code></td><td>Create a new lead from an unknown number. The normal "new lead" notification fires.</td></tr>
+          <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/leads/{id}/requests</code></td><td>Open an SAV request (a <code>UserNote</code> with category «طلب عميل»).</td></tr>
+          <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/app-version</code></td><td>Latest APK version + download link, so the app can offer updates without the Play Store.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details>
+      <summary>Example: what <code>/api/mobile/lookup</code> returns</summary>
+<pre><code>GET /api/mobile/lookup?phone=+213550123456
+Authorization: Bearer &lt;token&gt;
+
+{
+  "found": true,
+  "full_access": true,              // false = lead belongs to another agent
+  "lead": {
+    "id": 1234,
+    "name": "محمد بن علي",
+    "company": "صيدلية النور",
+    "wilaya": "وهران",
+    "business_type": "صيدلية",
+    "status": { "label": "مهتم", "stage": "interested" },
+    "assigned_to": "كريم",
+    "last_call": {
+      "at": "2026-11-06T10:15:00Z", "result": "available",
+      "by": "سارة", "note": "طلب عرض سعر لنسخة متعددة الأسعار"
+    },
+    "next_reminder": "2026-11-15T08:00:00Z",
+    "subscription": {
+      "type": "اشتراك", "required": 30000, "remaining": 10000,
+      "payment_status": "partial", "should_pay_on": "2026-11-20"
+    },
+    "open_requests": [ { "id": 9, "title": "مشكل في الطباعة", "priority": "urgent" } ],
+    "tags": ["VIP"],
+    "crm_url": "https://…/admin/leads/1234",
+    "whatsapp_url": "https://wa.me/213550123456"
+  }
+}</code></pre>
+    </details>
+  </section>
+
+  <!-- 5 -->
+  <section id="card">
+    <div class="sec-head"><span class="sec-num">05</span><h2>What the card shows, and where it comes from</h2></div>
+    <div class="fields">
+      <div class="fld"><b>Name &amp; company</b><code>customer_name</code>, <code>company_name</code></div>
+      <div class="fld"><b>Wilaya &amp; activity</b><code>wilaya</code> / <code>wilaya_text</code>, <code>business_type</code></div>
+      <div class="fld"><b>Status (color by stage)</b><code>leadStatus.name</code> + <code>stage</code></div>
+      <div class="fld"><b>Owner agent</b><code>assignedAgent.name</code></div>
+      <div class="fld"><b>Last call: date, result, note, who</b><code>latestCallLog</code></div>
+      <div class="fld"><b>Next reminder</b><code>reminder_date</code></div>
+      <div class="fld"><b>Subscription &amp; money left</b><code>latestSubscription</code> + payments</div>
+      <div class="fld"><b>Open SAV requests</b><code>userNotes</code> not resolved/closed</div>
+      <div class="fld"><b>Tags</b><code>tags</code></div>
+      <div class="fld"><b>Buttons</b>Open in CRM · WhatsApp · Log call</div>
+    </div>
+    <div class="note" style="margin-top:14px">
+      <b>Who sees what:</b> if the caller is another agent's lead, the card shows only the name, status and owner ("this is Karim's client") so the call can be passed on. Details follow the same rule as the CRM (<code>Lead::visibleTo</code>, and the «leads_shared» setting). Admins see everything.
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="speed">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Fast and private: two-layer lookup</h2></div>
+    <div class="layers">
+      <div class="layer">
+        <div class="tag">Layer 1 · on the phone</div>
+        <h3>Local client list</h3>
+        <p>Downloaded at login, refreshed every 2 hours and on pull-to-refresh. Holds only number, name, company and stage. Works without internet.</p>
+        <div class="speed">≈ 5 ms</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="layer">
+        <div class="tag">Layer 2 · the CRM</div>
+        <h3>Full live file</h3>
+        <p>Last call, payments, requests, owner. Times out after 3 s. If there is no internet, the card keeps the Layer 1 info and shows "offline".</p>
+        <div class="speed">≈ 300–900 ms</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:14px">
+      <b>Unknown numbers:</b> a lead may have arrived from WhatsApp 5 minutes ago and not be in the local list yet. A setting decides whether to ask the CRM about numbers that aren't in the local list:
+      <b>on</b> for company phones, <b>off</b> for personal phones, so private calls never leave the phone.
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="ring">
+    <div class="sec-head"><span class="sec-num">07</span><h2>What happens inside the app while it rings</h2></div>
+    <div class="seq">
+      <div data-t="0 ms">Android calls <code>CallerScreeningService.onScreenCall()</code> with the number. We answer "allow" right away: the app never blocks or delays a call.</div>
+      <div data-t="5 ms"><code>PhoneNormalizer</code> turns <bdi>+213550123456</bdi> into <bdi>0550123456</bdi> (same rules as <code>App\Support\Phone</code>), then looks it up in the local list.</div>
+      <div data-t="20 ms"><code>OverlayCard</code> appears over the call screen with name, company and status.</div>
+      <div data-t="~600 ms"><code>Api.lookup()</code> returns. The card fills in last call, money left and open requests.</div>
+      <div data-t="end"><code>CallEndWatcher</code> sees the call end and shows a notification «سجّل المكالمة». Tapping it opens the after-call screen.</div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="perms">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Android permissions (guided setup screen)</h2></div>
+    <p class="muted">Needs Android 10 or newer. The first-launch screen asks for each permission in order and opens the right settings page directly.</p>
+    <div class="card">
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div><div><b>Caller ID &amp; spam app</b><span>Lets Android give us the incoming number. Only one app can hold this role: if an agent uses Truecaller, they must choose ours on the work phone.</span></div></div>
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="6" rx="1"/></svg></div><div><b>Display over other apps</b><span>Draws the card on top of the call screen.</span></div></div>
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><b>Phone state</b><span>Tells us when the call ends, to show "Log this call?".</span></div></div>
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><b>Contacts</b><span>Android skips caller-ID apps for numbers saved in contacts unless the app can read contacts. Agents often save clients, so we need it.</span></div></div>
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg></div><div><b>Notifications</b><span>Backup card if the overlay is blocked, plus the after-call reminder.</span></div></div>
+      <div class="perm"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 10v4"/></svg></div><div><b>Battery: "No restrictions"</b><span>On Xiaomi/Redmi, Oppo, Realme and Huawei, also turn on <i>Autostart</i> and <i>Show pop-up windows while running in background</i>. Otherwise these phones kill the app and no card shows.</span></div></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="security">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Security and privacy</h2></div>
+    <div class="grid g2">
+      <div class="card"><ul class="clean">
+        <li>Login with the same CRM account. The token is encrypted with the Android Keystore.</li>
+        <li>HTTPS only, with rate limits on the API.</li>
+        <li>Disable a user in the CRM and the app stops working. Logout deletes the local list.</li>
+      </ul></div>
+      <div class="card"><ul class="clean">
+        <li>The card only shows what the agent can already see in the CRM.</li>
+        <li>No call recording, no SMS access, no upload of the phone's call history.</li>
+        <li>Client data on phones is personal data (Algerian Law 18-07), so the local list stays minimal.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="phases">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Build plan</h2></div>
+    <p class="muted">Rough estimates for one developer.</p>
+    <div class="phases">
+      <div class="phase card">
+        <div class="head"><h3>Phase 0: CRM API</h3><span class="dur">~3 days</span></div>
+        <ul>
+          <li>Sanctum, the 8 endpoints, <code>findByAnyPhone</code>, the <code>CallLogger</code> refactor.</li>
+          <li>Feature tests in <code>tests/Feature/Mobile</code>, same style as the existing tests.</li>
+          <li>Filament page «الأجهزة المرتبطة».</li>
+        </ul>
+        <div class="done"><b>Done when:</b> <code>curl /api/mobile/lookup?phone=…</code> returns the right card for every phone format.</div>
+      </div>
+      <div class="phase card">
+        <div class="head"><h3>Phase 1: Android MVP</h3><span class="dur">~2 weeks</span></div>
+        <ul>
+          <li>Android Studio project (Kotlin, Jetpack Compose, Arabic RTL), login screen, local list sync.</li>
+          <li><code>CallerScreeningService</code> (gets the number) + overlay card + phone normalizer.</li>
+          <li>Guided permissions screen.</li>
+          <li>Test with the Android emulator's "simulate incoming call", then on real Samsung / Xiaomi / Oppo phones.</li>
+        </ul>
+        <div class="done"><b>Done when:</b> a call from a client's number shows the card in under 1 second, with the app closed.</div>
+      </div>
+      <div class="phase card">
+        <div class="head"><h3>Phase 2: After the call</h3><span class="dur">~1 week</span></div>
+        <ul>
+          <li>Call-ended detection and the "Log this call" screen (result, note, status, reminder).</li>
+          <li>Create a lead from an unknown number. Open an SAV request.</li>
+          <li>Search screen (by number or name) and a "recent client calls" list.</li>
+          <li>In-app update check (<code>/api/mobile/app-version</code>).</li>
+        </ul>
+        <div class="done"><b>Done when:</b> a call logged from the phone appears in the lead's call history in the CRM.</div>
+      </div>
+      <div class="phase card opt">
+        <div class="head"><h3>Phase 3: Extras</h3><span class="dur">later</span></div>
+        <ul>
+          <li>Card for outgoing calls too.</li>
+          <li>Dual SIM: react only to the work SIM.</li>
+          <li>"Missed client calls" list: clients who called and nobody answered.</li>
+          <li>Incoming calls per agent in the CRM reports.</li>
+          <li>Push notification when an SAV request changes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="stack">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Tech stack and folders</h2></div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Android app (this folder: <code>truecaller/</code>)</h3>
+        <ul>
+          <li>Kotlin + Jetpack Compose (Material 3, RTL)</li>
+          <li>Min Android 10 (API 29)</li>
+          <li>Retrofit + OkHttp for <code>/api/mobile/*</code></li>
+          <li>Room: the local client list</li>
+          <li>WorkManager: refresh the list every 2 hours</li>
+          <li>DataStore + Android Keystore: encrypted token</li>
+          <li>APK built with Gradle, hosted on the CRM server</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>CRM (<code>soft_client_suivi/</code>)</h3>
+        <ul>
+          <li>Laravel 12 + Sanctum (new)</li>
+          <li>Mobile API controllers and one JSON resource</li>
+          <li><code>CallLogger</code> shared class</li>
+          <li>Filament page for connected devices</li>
+          <li>No new server needed: plain HTTPS requests work on the current hosting</li>
+        </ul>
+      </div>
+    </div>
+
+    <details>
+      <summary>Folder structure: Android app</summary>
+<pre><code>truecaller/
+├─ app/src/main/
+│  ├─ AndroidManifest.xml            ← permissions + CallScreeningService
+│  ├─ res/values-ar/strings.xml      ← Arabic texts
+│  └─ java/com/saascom/caller/
+│     ├─ MainActivity.kt
+│     ├─ ui/                         ← Compose screens
+│     │  ├─ LoginScreen.kt
+│     │  ├─ OnboardingScreen.kt      ← permissions, step by step
+│     │  ├─ RecentCallsScreen.kt
+│     │  ├─ SearchScreen.kt
+│     │  ├─ LeadScreen.kt            ← full client card
+│     │  ├─ AfterCallScreen.kt       ← "log this call"
+│     │  ├─ SettingsScreen.kt
+│     │  └─ components/CallerCard.kt ← used by the screens AND the overlay
+│     ├─ call/                       ← runs while the phone rings
+│     │  ├─ CallerScreeningService.kt
+│     │  ├─ OverlayCard.kt
+│     │  └─ CallEndWatcher.kt
+│     ├─ data/
+│     │  ├─ Api.kt                   ← /api/mobile/* (Retrofit)
+│     │  ├─ Directory.kt             ← local client list (Room)
+│     │  ├─ SyncWorker.kt            ← refresh every 2 h (WorkManager)
+│     │  └─ Session.kt               ← encrypted token
+│     └─ util/PhoneNormalizer.kt     ← same rules as App\Support\Phone
+└─ build.gradle.kts</code></pre>
+    </details>
+
+    <details>
+      <summary>Folder structure: CRM additions</summary>
+<pre><code>soft_client_suivi/
+├─ routes/api.php                               + /api/mobile/* routes
+├─ app/Http/Controllers/Api/Mobile/
+│  ├─ AuthController.php       (login, logout)
+│  ├─ DirectoryController.php  (light list)
+│  ├─ LookupController.php     (card for one number)
+│  ├─ CallController.php       (log a call)
+│  ├─ LeadController.php       (new lead from unknown number)
+│  ├─ RequestController.php    (SAV request = UserNote)
+│  └─ AppVersionController.php (latest APK)
+├─ app/Http/Resources/CallerCardResource.php
+├─ app/Support/CallLogger.php                   ← used by LeadActions::callHistory() and the API
+├─ app/Filament/Pages/ConnectedDevices.php
+├─ database/migrations/…_add_index_to_leads_secondary_phone.php
+└─ tests/Feature/Mobile/…</code></pre>
+    </details>
+  </section>
+
+  <!-- 12 -->
+  <section id="risks">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Risks and how we handle them</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Risk</th><th>What we do</th></tr></thead>
+        <tbody>
+          <tr><td>Some phone brands (Xiaomi, Oppo…) kill background apps</td><td>Guided setup for Autostart and battery. Test on the team's real phones in Phase 1.</td></tr>
+          <tr><td>Only one Caller ID app per phone</td><td>On work phones, our app takes the role instead of Truecaller.</td></tr>
+          <tr><td>Agents use personal phones</td><td>"Ask CRM for unknown numbers" stays off, plus the work-SIM-only option.</td></tr>
+          <tr><td>No internet when the call arrives</td><td>Layer 1 still shows name and status.</td></tr>
+          <tr><td>Old numbers saved in odd formats</td><td>One-time cleanup command using <code>Phone::normalize()</code>.</td></tr>
+          <tr><td>Google Play rules on call permissions</td><td>It's an internal app: install the APK from the CRM server (or a Play "internal testing" track). No public store listing.</td></tr>
+          <tr><td>Updating the app without the Play Store</td><td>The app checks <code>/api/mobile/app-version</code> and offers the new APK.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section id="questions">
+    <div class="sec-head"><span class="sec-num">13</span><h2>Decisions for you</h2></div>
+    <p class="muted">The plan uses the default in brackets until you decide otherwise.</p>
+    <div class="card">
+      <div class="q"><div class="qn">1</div><div><b>Company phones or personal phones?</b><span>This changes the privacy defaults and the Truecaller conflict. (Default: company phones.)</span></div></div>
+      <div class="q"><div class="qn">2</div><div><b>When another agent's client calls, show full details or only name + owner?</b><span>(Default: name, status and owner only. Admins see all.)</span></div></div>
+      <div class="q"><div class="qn">3</div><div><b>SAV requests: use the existing notes (UserNote «طلب عميل») or a new tickets module?</b><span>(Default: existing notes, already on the NotesBoard kanban.)</span></div></div>
+      <div class="q"><div class="qn">4</div><div><b>How to install: APK from the CRM server or Google Play internal testing?</b><span>(Default: APK from the CRM server + in-app update check.)</span></div></div>
+    </div>
+    <div class="verdict" style="margin-top:16px">
+      <b class="big">Next step</b>
+      Start Phase 0 in <code>soft_client_suivi</code> (Sanctum + the lookup endpoint), then create the Android project here in <code>truecaller/</code>. The step-by-step task lists are in the <code>phases/</code> folder: <a href="phases/README.md">README</a>, <a href="phases/api-contract.md">API contract</a>, <a href="phases/phase-0-crm-api.md">Phase 0</a>, <a href="phases/phase-1-android-mvp.md">Phase 1</a>, <a href="phases/phase-2-after-call.md">Phase 2</a>, <a href="phases/phase-3-extras.md">Phase 3</a>.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>References</b>
+    <ul>
+      <li><a href="https://developer.android.com/develop/connectivity/telecom/dialer-app/screen-calls">Android: Screen calls (CallScreeningService)</a></li>
+      <li><a href="https://developer.android.com/compose">Jetpack Compose</a></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/workmanager">WorkManager</a></li>
+      <li><a href="https://laravel.com/docs/sanctum">Laravel Sanctum</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
