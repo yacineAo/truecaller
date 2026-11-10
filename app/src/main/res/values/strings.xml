@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SAASCOM Caller</string>
+
+    <!-- Common -->
+    <string name="back">رجوع</string>
+    <string name="done">تم</string>
+    <string name="enable">تفعيل</string>
+    <string name="error_network">تعذّر الاتصال بالخادم. تحقّق من الإنترنت.</string>
+    <string name="error_generic">حدث خطأ، حاول مرة أخرى.</string>
+    <string name="error_not_your_lead">هذا العميل ليس من عملائك.</string>
+
+    <!-- Login -->
+    <string name="login_title">تسجيل الدخول</string>
+    <string name="login_subtitle">استعمل نفس حساب CRM.</string>
+    <string name="login_email">البريد الإلكتروني</string>
+    <string name="login_password">كلمة المرور</string>
+    <string name="login_server">عنوان الخادم</string>
+    <string name="login_button">دخول</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">تجهيز الهاتف</string>
+    <string name="onboarding_intro">فعّل هذه الأذونات ليظهر ملف العميل فوق شاشة المكالمة.</string>
+    <string name="onboarding_continue">متابعة</string>
+    <string name="onboarding_required_missing">الخطوات 1 إلى 4 ضرورية.</string>
+    <string name="step_role">تطبيق تعريف المتصل</string>
+    <string name="step_role_desc">ليعطينا Android رقم المتصل. إن كان Truecaller مفعّلاً فسيحلّ هذا التطبيق محلّه.</string>
+    <string name="step_role_unavailable">هذا الهاتف لا يدعم تطبيقات تعريف المتصل.</string>
+    <string name="step_overlay">الظهور فوق التطبيقات</string>
+    <string name="step_overlay_desc">لإظهار البطاقة فوق شاشة المكالمة.</string>
+    <string name="step_phone">حالة الهاتف</string>
+    <string name="step_phone_desc">لمعرفة نهاية المكالمة وإخفاء البطاقة.</string>
+    <string name="step_contacts">جهات الاتصال</string>
+    <string name="step_contacts_desc">لإظهار البطاقة حتى للأرقام المحفوظة في الهاتف.</string>
+    <string name="step_notifications">الإشعارات</string>
+    <string name="step_notifications_desc">بديل للبطاقة إن تعذّر إظهارها.</string>
+    <string name="step_battery">البطارية بلا قيود</string>
+    <string name="step_battery_desc">كي لا يوقف النظام التطبيق في الخلفية.</string>
+    <string name="step_autostart">التشغيل التلقائي</string>
+    <string name="step_autostart_desc">في إعدادات الهاتف: فعّل «التشغيل التلقائي»، و«عرض النوافذ المنبثقة أثناء العمل في الخلفية» إن وُجد. ثم اضغط «تم».</string>
+
+    <!-- Home -->
+    <string name="home_ready">جاهز ✓</string>
+    <string name="home_ready_desc">ستظهر بطاقة العميل عند كل مكالمة واردة.</string>
+    <string name="home_missing">ينقص إذن</string>
+    <string name="home_missing_desc">اضغط لإكمال تجهيز الهاتف.</string>
+    <string name="home_clients">%1$d رقم في القائمة</string>
+    <string name="home_last_sync">آخر تحديث: %1$s</string>
+    <string name="home_never_synced">لم تُحمَّل القائمة بعد</string>
+    <string name="home_sync">تحديث القائمة</string>
+    <string name="home_syncing">جارٍ التحديث…</string>
+    <string name="home_sync_failed">تعذّر التحديث</string>
+    <string name="home_test_card">تجربة البطاقة</string>
+    <string name="home_test_card_needs_overlay">فعّل «الظهور فوق التطبيقات» أولاً.</string>
+    <string name="home_settings">الإعدادات</string>
+    <string name="home_hello">مرحباً %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_lookup_unknown">سؤال CRM عن الأرقام غير المسجلة</string>
+    <string name="settings_lookup_unknown_desc">مفيد لعميل وصل قبل دقائق ولم يدخل القائمة بعد. أوقفه على هاتف شخصي حتى لا تخرج أرقام مكالماتك الخاصة.</string>
+    <string name="settings_permissions">فحص الأذونات</string>
+    <string name="settings_server">الخادم: %1$s</string>
+    <string name="settings_version">النسخة %1$s</string>
+    <string name="settings_logout">تسجيل الخروج</string>
+
+    <!-- Caller card -->
+    <string name="card_unknown_title">رقم غير موجود في CRM</string>
+    <string name="card_unknown_sub">قد يكون عميلاً جديداً</string>
+    <string name="card_loading">جارٍ جلب التفاصيل…</string>
+    <string name="card_offline">غير متصل · معلومات القائمة فقط</string>
+    <string name="card_owner">المسؤول</string>
+    <string name="card_no_owner">غير معيّن</string>
+    <string name="card_last_call">آخر مكالمة</string>
+    <string name="card_reminder">الموعد القادم</string>
+    <string name="card_subscription">الاشتراك</string>
+    <string name="card_remaining">الباقي %1$s</string>
+    <string name="card_paid_up">مدفوع بالكامل</string>
+    <string name="card_requests">%1$d طلب عميل مفتوح</string>
+    <string name="card_limited">عميل لدى %1$s</string>
+    <string name="card_open_crm">فتح في CRM</string>
+    <string name="card_whatsapp">واتساب</string>
+    <string name="card_close">إغلاق</string>
+
+    <!-- Notifications -->
+    <string name="channel_incoming">بطاقة المتصل</string>
+    <string name="channel_incoming_desc">تظهر عند المكالمة إن تعذّر عرض البطاقة فوق الشاشة.</string>
+
+    <!-- Phase 2: after the call -->
+    <string name="prompt_log">سجّل المكالمة مع %1$s</string>
+    <string name="prompt_log_action">تسجيل</string>
+    <string name="prompt_later">لاحقاً</string>
+    <string name="prompt_add_lead">%1$s غير موجود في CRM. إضافة كعميل جديد؟</string>
+    <string name="prompt_add_lead_action">إضافة</string>
+    <string name="prompt_ignore">تجاهل</string>
+    <string name="notif_after_call_text">اضغط لتسجيل المكالمة في CRM</string>
+    <string name="notif_missed_title">اتصل بك %1$s</string>
+    <string name="notif_missed_text">مكالمة فائتة من عميل</string>
+    <string name="notif_call_back">إعادة الاتصال</string>
+    <string name="notif_open_card">فتح البطاقة</string>
+    <string name="channel_after_call">بعد المكالمة</string>
+    <string name="channel_after_call_desc">تذكير بتسجيل المكالمة، والمكالمات الفائتة من العملاء.</string>
+
+    <!-- Tabs -->
+    <string name="tab_recent">الأخيرة</string>
+    <string name="tab_search">بحث</string>
+    <string name="tab_settings">الإعدادات</string>
+
+    <!-- Recent calls -->
+    <string name="recent_title">المكالمات الأخيرة</string>
+    <string name="recent_empty">لا توجد مكالمات بعد. ستظهر هنا مكالمات العملاء.</string>
+    <string name="recent_missed">فائتة</string>
+    <string name="recent_unlogged">غير مسجّلة</string>
+    <string name="recent_not_in_crm">غير موجود في CRM</string>
+    <string name="outbox_waiting">%1$d بانتظار الإرسال</string>
+    <string name="outbox_refused">لم يُرسل: %1$s</string>
+    <string name="outbox_delete">حذف</string>
+    <string name="outbox_retry">إعادة المحاولة</string>
+
+    <!-- Search -->
+    <string name="search_hint">رقم الهاتف أو الاسم</string>
+    <string name="search_empty">لا نتائج</string>
+    <string name="search_intro">ابحث في %1$d رقم من CRM</string>
+
+    <!-- Lead page -->
+    <string name="lead_call">اتصال</string>
+    <string name="lead_log_call">تسجيل مكالمة</string>
+    <string name="lead_add_request">طلب عميل</string>
+    <string name="lead_add">إضافة كعميل جديد</string>
+    <string name="loading">جارٍ التحميل…</string>
+
+    <!-- After-call form -->
+    <string name="after_title">تسجيل المكالمة</string>
+    <string name="after_duration">انتهت المكالمة · %1$s</string>
+    <string name="after_result">نتيجة المكالمة</string>
+    <string name="after_notes">ملاحظة</string>
+    <string name="after_notes_required">اكتب ملاحظة عن المكالمة.</string>
+    <string name="after_status">الحالة</string>
+    <string name="after_status_keep">بدون تغيير</string>
+    <string name="after_reminder">التذكير</string>
+    <string name="after_reminder_current">الموعد الحالي: %1$s</string>
+    <string name="after_reminder_none">لا يوجد موعد</string>
+    <string name="after_reminder_keep">بدون تغيير</string>
+    <string name="after_reminder_3">بعد 3 أيام</string>
+    <string name="after_reminder_5">بعد 5 أيام</string>
+    <string name="after_reminder_7">بعد 7 أيام</string>
+    <string name="after_reminder_14">بعد 14 يوماً</string>
+    <string name="after_reminder_30">بعد شهر</string>
+    <string name="after_reminder_pick">تاريخ آخر…</string>
+    <string name="after_reminder_clear">حذف الموعد</string>
+    <string name="after_reminder_chosen">الموعد الجديد: %1$s</string>
+    <string name="after_reminder_suggested">مقترح حسب استراتيجية المتابعة</string>
+    <string name="after_reminder_passed">الموعد المقترح فات: اختر موعداً جديداً.</string>
+    <string name="after_archive_suggested">آخر محاولة: الحالة المقترحة «مؤرشف»</string>
+    <string name="after_save">حفظ في CRM</string>
+    <string name="after_saved">تم تسجيل المكالمة</string>
+    <string name="after_not_in_crm">هذا الرقم غير موجود في CRM.</string>
+    <string name="after_limited">هذا العميل لدى %1$s: التسجيل من صلاحيته.</string>
+    <string name="after_offline">غير متصل: سيُرسل التسجيل عند توفر الإنترنت.</string>
+    <string name="queued">لا يوجد اتصال: سيتم الإرسال عند توفر الإنترنت</string>
+    <string name="ok">حسناً</string>
+    <string name="cancel">إلغاء</string>
+
+    <!-- New lead -->
+    <string name="new_lead_title">عميل جديد</string>
+    <string name="new_lead_phone">رقم الهاتف</string>
+    <string name="new_lead_name">اسم العميل</string>
+    <string name="new_lead_company">اسم الشركة / المحل</string>
+    <string name="new_lead_notes">ملاحظة المكالمة</string>
+    <string name="new_lead_save">إضافة</string>
+    <string name="new_lead_saved">تمت إضافة العميل</string>
+    <string name="new_lead_exists">الرقم موجود مسبقاً</string>
+
+    <!-- SAV request -->
+    <string name="request_title">طلب عميل</string>
+    <string name="request_for">العميل: %1$s</string>
+    <string name="request_subject">العنوان</string>
+    <string name="request_details">التفاصيل</string>
+    <string name="request_priority">الأولوية</string>
+    <string name="request_send">إرسال</string>
+    <string name="request_sent">تم إرسال الطلب</string>
+
+    <!-- Outbox labels -->
+    <string name="label_call">مكالمة · %1$s</string>
+    <string name="label_lead">عميل جديد · %1$s</string>
+    <string name="label_request">طلب عميل · %1$s</string>
+
+    <!-- In-app update -->
+    <string name="settings_update_check">البحث عن تحديث</string>
+    <string name="update_none">لديك آخر نسخة</string>
+    <string name="update_title">نسخة جديدة %1$s</string>
+    <string name="update_text">نسخة جديدة من التطبيق متوفرة.</string>
+    <string name="update_required">هذه النسخة لم تعد مدعومة. حدّث التطبيق للمتابعة.</string>
+    <string name="update_now">تحديث</string>
+    <string name="update_later">لاحقاً</string>
+    <string name="update_downloading">جارٍ التنزيل… %1$d%%</string>
+    <string name="update_failed">تعذّر التحديث: %1$s</string>
+    <string name="update_bad_file">الملف المنزّل غير صالح.</string>
+    <string name="update_allow_install">اسمح للتطبيق بتثبيت التحديثات، ثم اضغط «تحديث» مرة أخرى.</string>
+</resources>

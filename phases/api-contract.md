@@ -114,6 +114,7 @@ The light list used for the instant match while the phone rings. The app may sen
 
 - **One entry per phone**, already normalized: a lead with a `secondary_phone` gives two entries. If two leads share a phone, the one where it's the `whatsapp_phone` wins.
 - Contains **all** leads (only these minimal fields), so the agent always knows the caller is a client and who owns it.
+- Size measured on real data (2,207 numbers): about 320 KB, or about 52 KB gzipped. Arabic is sent as UTF-8. OkHttp asks for gzip by itself, and the ETag makes most syncs a 304 with no body.
 - `statuses` is ordered by `sort_order`, for the "change status" dropdown.
 - `name` can be `null`. The app then shows `company`, then the phone.
 
@@ -159,8 +160,9 @@ The light list used for the instant match while the phone rings. The app may sen
 
 - `wilaya`: the `wilaya.name` relation, otherwise `wilaya_text`.
 - `last_call`, `next_reminder`, `subscription`: `null` when empty. `subscription` is `latestSubscription`.
-- `open_requests`: the latest 3 `userNotes` whose status is not in `UserNote::DONE_STATUSES`.
+- `open_requests` / `open_requests_count`: notes whose status is not in `UserNote::DONE_STATUSES`, **limited to the ones this user can see in the CRM** (`UserNote::visibleTo`: an agent's own notes or notes assigned to them; admins see all). The list holds the latest 3.
 - `follow_up_if_unreachable`: `FollowUpStrategy::nextStepFor($lead, 'no_answer')`. The app uses it to pre-fill the reminder when the agent picks `no_answer`/`busy`/`closed`, the same way the CRM form does. When the action is `archive`, `date` is `null` and `archive_status_id` is the id of the `archived` status (or `null` if that status doesn't exist).
+  - The `date` is counted from the day the lead **arrived**, exactly like the CRM form. For old leads it can be **in the past**. The app should not pre-fill a past date: it shows the quick-reminder chips instead.
 
 **200, found, limited** (the lead belongs to another agent; `LeadPolicy::view` is false)
 

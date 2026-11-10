@@ -475,7 +475,7 @@
         <tbody>
           <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/login</code></td><td>Email + password, returns a token. Active users only.</td></tr>
           <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/logout</code></td><td>Deletes this phone's token.</td></tr>
-          <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/directory</code></td><td>Light list of all numbers: phone, name, company, stage (about 150 KB). Used for the instant match.</td></tr>
+          <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/directory</code></td><td>Light list of all numbers: phone, name, company, stage (about 320 KB, about 50 KB compressed). Used for the instant match.</td></tr>
           <tr><td><span class="method GET">GET</span></td><td><code>/api/mobile/lookup?phone=…</code></td><td>The full card for one number.</td></tr>
           <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/leads/{id}/calls</code></td><td>Log the call: result, note, optional new status and reminder.</td></tr>
           <tr><td><span class="method POST">POST</span></td><td><code>/api/mobile/leads</code></td><td>Create a new lead from an unknown number. The normal "new lead" notification fires.</td></tr>

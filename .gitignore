@@ -1,0 +1,18 @@
+# Gradle / Android Studio
+.gradle/
+build/
+/local.properties
+.idea/
+*.iml
+.kotlin/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing: never commit keys
+*.jks
+*.keystore
+keystore.properties
+
+# Tool output
+.playwright-mcp/
